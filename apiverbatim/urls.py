@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("transcribe/", include("verbatim.urls")),
+    path("spotify/", include("spotify.urls")),
 ]
