@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from . import transcriber
 
-def index(request):
-    return HttpResponse("Hello, world!")
-
-def transcribe(request, response):
-    pass
+def transcribe(request):
+    transcription = transcriber.transcribe_batch('./audio/woman1_wb.wav')
+    return HttpResponse(transcription)
