@@ -4,8 +4,8 @@ import os
 import wave
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
-model_file_path = './deepspeech-0.9.3-models.pbmm'
-scorer_file_path = './deepspeech-0.9.3-models.scorer'
+model_file_path = './transcriber models/deepspeech-0.9.3-models.pbmm'
+scorer_file_path = './transcriber models/deepspeech-0.9.3-models.scorer'
 
 # hiperparâmetros - valores recomendados
 beam_width = 100
