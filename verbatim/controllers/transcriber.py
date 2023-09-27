@@ -19,21 +19,17 @@ model.setScorerAlphaBeta(scorer_alpha, scorer_beta)
 model.setBeamWidth(beam_width)
 
 def read_wav_file(filename):
+    #if not wav
+
     with wave.open(filename, 'rb') as w:
         rate = w.getframerate()
         frames = w.getnframes()
         buffer = w.readframes(frames)
 
         # if(rate != 16000):
-
-        print('rate: ', rate)
-        print('frames: ', frames)
-        print('buffer length: ', len(buffer))
     return buffer, rate
 
 def transcribe_batch(audio_file):
     buffer, rate = read_wav_file(audio_file)
     data16 = np.frombuffer(buffer, dtype=np.int16)
     return model.stt(data16)
-
-print('\n', transcribe_batch('./audio/woman1_wb.wav'))
