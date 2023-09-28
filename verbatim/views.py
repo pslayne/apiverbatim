@@ -2,13 +2,17 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
-from .controllers import encripting, transcriber
+from .controllers import encripting, transcriber, firebase
 from . import models
+
+storage_bucket = firebase.init_firebase()
 
 @require_GET
 def transcribe(request):
-    # receber um arquivo de áudio
-    transcription = transcriber.transcribe_batch('./audio/woman1_wb.wav')
+    filename = request.GET.get('filename')
+    blob = storage_bucket.blob(f'audio/{filename}')
+    blob.download_to_filename(f'audio/{filename}')
+    transcription = transcriber.transcribe_batch(f'audio/{filename}')
     return JsonResponse({ 'message': transcription }, status = 200)
 
 @require_POST
