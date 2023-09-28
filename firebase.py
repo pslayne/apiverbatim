@@ -13,7 +13,9 @@ blob = bucket.blob('audio/woman1_wb.wav')
 blob.upload_from_filename('audio/woman1_wb.wav')
 
 # Opt : if you want to make public access from the URL
-blob.make_public()
+# blob.make_public()
+
+blob.download_to_filename('audio/test.wav')
 
 print("your file url", blob.public_url)
 
