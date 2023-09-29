@@ -9,7 +9,7 @@ storage_bucket = firebase.init_firebase()
 
 @require_GET
 def transcribe(request):
-    filename = request.GET.get('filename')
+    filename = request.GET.get('file_name')
     blob = storage_bucket.blob(f'audio/{filename}')
     blob.download_to_filename(f'audio/{filename}')
     transcription = transcriber.transcribe_batch(f'audio/{filename}')
