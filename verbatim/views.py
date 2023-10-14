@@ -5,21 +5,18 @@ from .controllers import transcriber, firebase
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from .serializer import MyTokenObtainPairSerializer
-
 from . import models
 
-storage_bucket = firebase.get_bucket()
-
-@require_GET
-@api_view(['GET'])
+@require_POST
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def transcribe(request):
+    file = request.FILES['file']
+    transcription = transcriber.transcribe_batch(file)
 
-    filename = request.GET.get('file_name')
-    blob = storage_bucket.blob(f'audio/{filename}')
-    blob.download_to_filename(f'audio/{filename}')
-    transcription = transcriber.transcribe_batch(f'audio/{filename}')
+    print(transcription)
     return JsonResponse({ 'message': transcription }, status = 200)
+
 
 @require_POST
 @csrf_exempt
