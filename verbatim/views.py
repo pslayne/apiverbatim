@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
-from .controllers import transcriber, firebase
+from .controllers import transcriber
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from .serializer import MyTokenObtainPairSerializer
@@ -12,10 +12,11 @@ from . import models
 @permission_classes([IsAuthenticated])
 def transcribe(request):
     file = request.FILES['file']
-    transcription = transcriber.transcribe_batch(file)
-
-    print(transcription)
-    return JsonResponse({ 'message': transcription }, status = 200)
+    try:
+        transcription = transcriber.transcribe_batch(file)
+        return JsonResponse({ 'message': transcription }, status = 200)
+    except:
+        return JsonResponse({ 'message': 'couldn\'t transcript file'  }, status = 500)
 
 
 @require_POST
