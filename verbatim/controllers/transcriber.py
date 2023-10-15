@@ -1,9 +1,5 @@
-from deepspeech import Model
 import numpy as np
 import os
-import wave
-import scipy.io.wavfile as wav
-from scipy import signal
 from pydub import AudioSegment
 import speech_recognition as sr
 
@@ -28,9 +24,6 @@ def transcribe_batch(audio_file):
     audio = read_wav_file(audio_file)
     # recognize speech using Google Speech Recognition
     try:
-        # for testing purposes, we're just using the default API key
-        # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-        # instead of `r.recognize_google(audio)`
         return r.recognize_google(audio)
     except sr.UnknownValueError:
         return ''
